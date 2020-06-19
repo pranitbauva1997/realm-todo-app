@@ -25,3 +25,7 @@ static/hello.db
 /index.html
 elm.hashed-*
 sw.hashed-*
+
+.proxy.txt
+.proxy.txt.bak
+target/

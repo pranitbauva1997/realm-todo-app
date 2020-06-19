@@ -144,5 +144,10 @@ alias open=/usr/bin/open
 alias gst="git status"
 alias gd="git diff"
 alias gp="git push"
+alias less=bat
+alias cat=bat
+alias lc="tokei -s lines | bat"
+alias cc="cargo fmt && cargo check"
+alias serve="cargo run -- --test"
 
 setup

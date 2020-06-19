@@ -1,0 +1,24 @@
+[package]
+name = "realm_tutorial"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+realm = { version = "0.1.20", features=["sqlite", "sqlite_default"] }
+realm_macros = "0.1.1"
+observer = "0.2.2"
+observer_attribute = "0.1.7"
+failure = "~0.1.1"
+http = "0.1.17"
+hyper = "0.12.33"
+futures = "0.1.26"
+serde_derive = "~1.0.0"
+serde = "~1.0.0"
+askama = "0.9"
+diesel = { version = "1.4.2", features = ["sqlite"] }
+
+[workspace]
+members = [
+    "realm",
+    "realm/realm_macros"
+]

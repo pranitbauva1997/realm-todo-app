@@ -1,0 +1,11 @@
+doit==0.32.0
+django==3.0.7
+dj-database-url
+pygments
+brotli
+pip-tools
+pre-commit==1.10
+ipython
+django-extensions
+gsub==0.1.5
+click==7

@@ -1,7 +1,38 @@
 module Test exposing (main)
 
+import Actions
+import Json.Encode as JE
 import Realm.Test as RT
+import Routes
+import ToDoTest as ToDo
 
 
 main =
-    RT.app { tests = [], title = "Realm Starter" }
+    RT.app { tests = tests, title = "Realm ToDo App" }
+
+
+tests : List RT.Test
+tests =
+    let
+        context =
+            [ ( "name", JE.string "Realm Tutorial" ) ]
+
+        f : String -> List RT.Step -> RT.Test
+        f id steps =
+            { id = id, context = context, steps = steps }
+
+        t =
+            [ f "index" index ]
+    in
+    t
+
+
+index : List RT.Step
+index =
+    [ RT.Navigate ToDo.threeNotDone Routes.clearTodos
+    , RT.Navigate ToDo.threeNotDone Routes.index
+    , RT.SubmitForm ToDo.firstDone (Actions.toggleToDo 0)
+    , RT.Navigate ToDo.firstDone Routes.index
+    , RT.SubmitForm ToDo.threeNotDone (Actions.toggleToDo 0)
+    , RT.Navigate ToDo.threeNotDone Routes.index
+    ]

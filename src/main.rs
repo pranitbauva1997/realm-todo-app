@@ -1,11 +1,18 @@
 use realm::base::*;
 realm::realm! {middleware}
 
+pub fn http404(msg: &str) -> realm::Result {
+    use realm::Page;
+    realm_tutorial::not_found::not_found(msg).with_title(msg)
+}
+
 pub fn middleware(ctx: &realm::Context) -> realm::Result {
+    observer::create_context("middleware");
+
     let conn = sqlite::connection()?;
     let in_: In0 = realm::base::In::from(&conn, ctx);
 
-    route(&in_)
+    realm::end_context(&in_, route(&in_), |_, m| http404(m))
 }
 
 pub fn route(in_: &In0) -> realm::Result {
@@ -13,16 +20,15 @@ pub fn route(in_: &In0) -> realm::Result {
 
     match in_.ctx.pm() {
         t if realm::is_realm_url(t) => realm::handle(in_, t, &mut input),
-        ("/", _) => realm_tutorial::routes::todos::todo(),
-        ("/add-todo/", _) => realm_tutorial::routes::todos::add_todo(
+        ("/", _) => realm_tutorial::routes::index::todo(),
+        ("/add-todo/", _) => realm_tutorial::routes::index::add_todo(
             in_,
             input.required("title")?,
             input.required("done")?,
         ),
-        ("/empty_todos/", _) => realm_tutorial::routes::todos::empty_todo(),
-        ("/api/clear-todo/", _) => realm_tutorial::routes::todos::clear(),
-        ("/api/toggle-todo/", _) => realm_tutorial::routes::todos::toggle(input.required("index")?),
-        ("/increment/", _) => realm_tutorial::routes::increment::get(in_),
-        _ => realm_tutorial::routes::index::get(in_),
+        ("/empty_todos/", _) => realm_tutorial::routes::index::empty_todo(),
+        ("/api/clear-todo/", _) => realm_tutorial::routes::index::clear(),
+        ("/api/toggle-todo/", _) => realm_tutorial::routes::index::toggle(input.required("index")?),
+        _ => realm_tutorial::routes::index::todo(),
     }
 }

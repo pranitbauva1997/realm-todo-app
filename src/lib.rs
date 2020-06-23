@@ -11,6 +11,8 @@ extern crate realm_macros;
 extern crate diesel;
 
 pub mod db;
+pub mod not_found;
+pub mod prelude;
 pub mod reverse;
 pub mod routes;
 pub mod schema;

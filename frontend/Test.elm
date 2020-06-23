@@ -2,9 +2,9 @@ module Test exposing (main)
 
 import Actions
 import Json.Encode as JE
+import Pages.IndexTest as Index
 import Realm.Test as RT
 import Routes
-import ToDoTest as ToDo
 
 
 main =
@@ -43,11 +43,11 @@ tests =
 
 index : List RT.Step
 index =
-    [ RT.Navigate ToDo.emptyList Routes.emptyToDo
-    , RT.SubmitForm ToDo.singleToDo (Actions.addToDo "Hello" False)
+    [ RT.Navigate Index.emptyList Routes.emptyToDo
+    , RT.SubmitForm Index.singleToDo (Actions.addToDo "Hello" False)
     ]
 
 
 resetDB : List RT.Step
 resetDB =
-    [ RT.Navigate ToDo.emptyList Routes.emptyToDo ]
+    [ RT.Navigate Index.emptyList Routes.emptyToDo ]

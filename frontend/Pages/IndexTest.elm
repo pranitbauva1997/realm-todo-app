@@ -1,4 +1,4 @@
-module ToDoTest exposing (..)
+module Pages.IndexTest exposing (..)
 
 import Pages.Index as M
 import Realm as R
@@ -11,29 +11,29 @@ main =
 
 emptyList : ( String, String )
 emptyList =
-    ( "ToDo", "emptyList" )
+    ( "Index", "emptyList" )
 
 
 singleToDo : ( String, String )
 singleToDo =
-    ( "ToDo", "singleToDo" )
+    ( "Index", "singleToDo" )
 
 
 threeNotDone : ( String, String )
 threeNotDone =
-    ( "ToDo", "threeNotDone" )
+    ( "Index", "threeNotDone" )
 
 
 firstDone : ( String, String )
 firstDone =
-    ( "ToDo", "firstDone" )
+    ( "Index", "firstDone" )
 
 
 init : R.In -> R.TestFlags M.Config -> ( M.Model, Cmd (R.Msg M.Msg) )
 init in_ test =
     let
         id =
-            ( "ToDo", test.id )
+            ( "Index", test.id )
 
         ( m, c ) =
             M.app.init in_ test.config

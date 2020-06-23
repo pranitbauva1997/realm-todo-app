@@ -3,14 +3,19 @@
     <head>
         <meta charset="utf-8" />
         <title>__realm_title__</title>
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, user-scalable=0,  viewport-fit=cover"/>
+
         <script id="data" type="application/json">
-__realm_data__
+            __realm_data__
         </script>
-        <style>p {margin: 0}</style>
+        <style>
+            p { margin: 0 }
+            ul { margin: 0 }
+        </style>
     </head>
     <body>
         __realm_body__
-        <div id="main"></div><script src='/static/elm.js'></script>
+        <div id="main"></div>
+        <script src='/static/elm.__hash__.js'></script>
     </body>
 </html>

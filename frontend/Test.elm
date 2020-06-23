@@ -22,7 +22,9 @@ tests =
             { id = id, context = context, steps = steps }
 
         t =
-            [ f "index" index ]
+            [ f "index" index
+            , f "resetDB" resetDB
+            ]
     in
     t
 
@@ -41,4 +43,11 @@ tests =
 
 index : List RT.Step
 index =
+    [ RT.Navigate ToDo.emptyList Routes.emptyToDo
+    , RT.SubmitForm ToDo.singleToDo (Actions.addToDo "Hello" False)
+    ]
+
+
+resetDB : List RT.Step
+resetDB =
     [ RT.Navigate ToDo.emptyList Routes.emptyToDo ]

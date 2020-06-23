@@ -14,6 +14,11 @@ emptyList =
     ( "ToDo", "emptyList" )
 
 
+singleToDo : ( String, String )
+singleToDo =
+    ( "ToDo", "singleToDo" )
+
+
 threeNotDone : ( String, String )
 threeNotDone =
     ( "ToDo", "threeNotDone" )
@@ -57,6 +62,12 @@ init in_ test =
 
      else if id == emptyList then
         [ RU.match "no todos" [] test.config.list ]
+
+     else if id == singleToDo then
+        [ RU.match "single todo"
+            [ M.todo "Hello" False ]
+            test.config.list
+        ]
 
      else
         [ R.TestFailed test.id "IndexTest: id not known" ]

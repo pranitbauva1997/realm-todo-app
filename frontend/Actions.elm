@@ -11,3 +11,11 @@ s2 url params =
 toggleToDo : Int -> ( String, JE.Value )
 toggleToDo i =
     s2 "/api/toggle-todo/" [ ( "index", JE.int i ) ]
+
+
+addToDo : String -> Bool -> ( String, JE.Value )
+addToDo title done =
+    s2 "/add-todo/"
+        [ ( "title", JE.string title )
+        , ( "done", JE.bool done )
+        ]

@@ -99,6 +99,13 @@ rust_schema() {
     popd2
 }
 
+# Write a SQLITE version of reset_db function
+# reset_db will copy pristine.db to hello.db
+# How do we know that reset_db function is working correctly?
+# Two tests: first test will create a todo item, second test
+# will expect the number of ToDo items to be 0. Test.elm
+# framework runs the two test and resets the DB before every test
+
 recreatedb_sqlite() {
     pushd2 /
     echo "    -> deleting existing db"

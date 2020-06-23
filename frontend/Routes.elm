@@ -8,4 +8,9 @@ index =
 
 clearTodos : String
 clearTodos =
-    "/api/clear-todo"
+    "/api/clear-todo/"
+
+
+emptyToDo : String
+emptyToDo =
+    "/empty_todos/"

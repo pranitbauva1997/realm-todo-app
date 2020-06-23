@@ -27,12 +27,18 @@ tests =
     t
 
 
+
+--index : List RT.Step
+--index =
+--    [ RT.Navigate ToDo.threeNotDone Routes.clearTodos
+--    , RT.Navigate ToDo.threeNotDone Routes.index
+--    , RT.SubmitForm ToDo.firstDone (Actions.toggleToDo 0)
+--    , RT.Navigate ToDo.firstDone Routes.index
+--    , RT.SubmitForm ToDo.threeNotDone (Actions.toggleToDo 0)
+--    , RT.Navigate ToDo.threeNotDone Routes.index
+--    ]
+
+
 index : List RT.Step
 index =
-    [ RT.Navigate ToDo.threeNotDone Routes.clearTodos
-    , RT.Navigate ToDo.threeNotDone Routes.index
-    , RT.SubmitForm ToDo.firstDone (Actions.toggleToDo 0)
-    , RT.Navigate ToDo.firstDone Routes.index
-    , RT.SubmitForm ToDo.threeNotDone (Actions.toggleToDo 0)
-    , RT.Navigate ToDo.threeNotDone Routes.index
-    ]
+    [ RT.Navigate ToDo.emptyList Routes.emptyToDo ]

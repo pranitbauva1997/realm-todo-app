@@ -9,6 +9,11 @@ main =
     R.test0 M.app init
 
 
+emptyList : ( String, String )
+emptyList =
+    ( "ToDo", "emptyList" )
+
+
 threeNotDone : ( String, String )
 threeNotDone =
     ( "ToDo", "threeNotDone" )
@@ -49,6 +54,9 @@ init in_ test =
             ]
             test.config.list
         ]
+
+     else if id == emptyList then
+        [ RU.match "no todos" [] test.config.list ]
 
      else
         [ R.TestFailed test.id "IndexTest: id not known" ]

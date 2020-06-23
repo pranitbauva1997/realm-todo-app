@@ -1,2 +1,2 @@
 [print_schema]
-filter = { only_tables = ["hello_counter"] }
+filter = { only_tables = ["hello_counter", "hello_todo"] }

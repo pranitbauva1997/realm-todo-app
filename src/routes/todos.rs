@@ -1,14 +1,21 @@
-use crate::prelude::*;
+use crate::db::add_todo_db;
+pub use realm::base::*;
+pub use realm::{Or404, Page as RealmPage};
 
 #[derive(Serialize, Deserialize)]
-struct Item {
-    title: String,
-    done: bool,
+pub struct Item {
+    pub title: String,
+    pub done: bool,
 }
 
 #[realm_page(id = "Pages.ToDo")]
 struct Page {
     list: Vec<Item>,
+}
+
+pub fn empty_todo() -> realm::Result {
+    let items = vec![];
+    Page { list: items }.with_title("Empty Todo List")
 }
 
 pub fn clear() -> realm::Result {
@@ -31,6 +38,11 @@ pub fn clear() -> realm::Result {
     redirect()
 }
 
+pub fn add_todo(in_: &In0, title: String, done: bool) -> realm::Result {
+    add_todo_db(in_, title, done as i32)?;
+    redirect()
+}
+
 pub fn todo() -> realm::Result {
     // TODO: read the json file, deserialize it into vec of Item
     Page {
@@ -49,5 +61,5 @@ pub fn toggle(index: usize) -> realm::Result {
 }
 
 pub fn redirect() -> realm::Result {
-    todo().map(|r| r.with_url(crate::reverse::todo()))
+    todo().map(|r| r.with_url(crate::reverse::index()))
 }

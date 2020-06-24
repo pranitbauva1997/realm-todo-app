@@ -4,6 +4,7 @@ pub use realm::{Or404, Page as RealmPage};
 
 #[derive(Serialize, Deserialize)]
 pub struct Item {
+    pub index: i32,
     pub title: String,
     pub done: bool,
 }
@@ -22,14 +23,17 @@ pub fn clear(in_: &In0) -> realm::Result {
     // /api/todo/clear/
     let items = vec![
         Item {
+            index: 0,
             title: "hello one".to_string(),
             done: false,
         },
         Item {
+            index: 1,
             title: "hello two".to_string(),
             done: false,
         },
         Item {
+            index: 2,
             title: "hello three".to_string(),
             done: false,
         },
@@ -51,12 +55,7 @@ pub fn todo(in_: &In0) -> realm::Result {
     .with_title("ToDo List")
 }
 
-pub fn toggle(in_: &In0, index: usize) -> realm::Result {
-    let mut items: Vec<Item> = serde_json::from_slice(&std::fs::read("todos.json")?)?;
-    if let Some(mut item) = items.get_mut(index) {
-        item.done = !item.done
-    }
-    std::fs::write("todos.json", &serde_json::to_vec(&items)?)?;
+pub fn toggle(in_: &In0, _index: usize) -> realm::Result {
     redirect(in_)
 }
 

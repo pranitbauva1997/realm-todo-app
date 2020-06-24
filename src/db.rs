@@ -32,3 +32,32 @@ pub fn get_all_todos(in_: &In0) -> Result<Vec<crate::routes::index::Item>> {
         Err(er) => Err(er),
     }
 }
+
+pub fn toggle_todo(in_: &In0, index: i32) -> Result<()> {
+    use crate::schema::hello_todo;
+    use diesel::prelude::*;
+
+    let rows: Result<Vec<(i32, String, i32)>> = hello_todo::table
+        .select((hello_todo::id, hello_todo::title, hello_todo::done))
+        .filter(hello_todo::id.eq(index))
+        .load(in_.conn)
+        .map_err(Into::into);
+
+    let updated_rows: Vec<(i32, String, i32)> = match rows {
+        Ok(r) => r
+            .into_iter()
+            .map(|item| (item.0, item.1, if item.2 == 0 { 1 } else { 0 }))
+            .collect(),
+        Err(_) => vec![],
+    };
+
+    diesel::update(hello_todo::dsl::hello_todo.filter(hello_todo::id.eq(updated_rows[0].0)))
+        .set((
+            hello_todo::id.eq(updated_rows[0].0),
+            hello_todo::title.eq(updated_rows[0].1.as_str()),
+            hello_todo::done.eq(updated_rows[0].2),
+        ))
+        .execute(in_.conn)
+        .map(|_| ())
+        .map_err(Into::into)
+}

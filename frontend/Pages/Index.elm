@@ -18,9 +18,9 @@ type alias Config =
     }
 
 
-todo : String -> Bool -> Item
-todo title done =
-    { title = title, done = done }
+todo : Int -> String -> Bool -> Item
+todo index title done =
+    { index = index, title = title, done = done }
 
 
 config : JD.Decoder Config
@@ -35,7 +35,8 @@ configE c =
 
 
 type alias Item =
-    { title : String
+    { index : Int
+    , title : String
     , done : Bool
     }
 
@@ -51,6 +52,7 @@ itemE i =
 item : JD.Decoder Item
 item =
     JD.succeed Item
+        |> R.field "index" JD.int
         |> R.field "title" JD.string
         |> R.field "done" JD.bool
 

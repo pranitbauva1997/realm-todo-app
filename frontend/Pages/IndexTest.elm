@@ -19,6 +19,11 @@ singleToDo =
     ( "Index", "singleToDo" )
 
 
+toggleToDo : ( String, String )
+toggleToDo =
+    ( "Index", "toggleToDo" )
+
+
 threeNotDone : ( String, String )
 threeNotDone =
     ( "Index", "threeNotDone" )
@@ -44,18 +49,18 @@ init in_ test =
     in
     (if id == threeNotDone then
         [ RU.match "three not done"
-            [ M.todo "hello one" False
-            , M.todo "hello two" False
-            , M.todo "hello three" False
+            [ M.todo 1 "hello one" False
+            , M.todo 2 "hello two" False
+            , M.todo 3 "hello three" False
             ]
             test.config.list
         ]
 
      else if id == firstDone then
         [ RU.match "first done"
-            [ M.todo "hello one" True
-            , M.todo "hello two" False
-            , M.todo "hello three" False
+            [ M.todo 1 "hello one" True
+            , M.todo 2 "hello two" False
+            , M.todo 3 "hello three" False
             ]
             test.config.list
         ]
@@ -65,7 +70,13 @@ init in_ test =
 
      else if id == singleToDo then
         [ RU.match "single todo"
-            [ M.todo "Hello" False ]
+            [ M.todo 1 "Hello" False ]
+            test.config.list
+        ]
+
+     else if id == toggleToDo then
+        [ RU.match "toggling todo"
+            [ M.todo 1 "Hello" True ]
             test.config.list
         ]
 

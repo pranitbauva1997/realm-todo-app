@@ -1,4 +1,4 @@
-use crate::db::{add_todo_db, get_all_todos};
+use crate::db::{add_todo_db, get_all_todos, toggle_todo};
 pub use realm::base::*;
 pub use realm::{Or404, Page as RealmPage};
 
@@ -55,7 +55,8 @@ pub fn todo(in_: &In0) -> realm::Result {
     .with_title("ToDo List")
 }
 
-pub fn toggle(in_: &In0, _index: usize) -> realm::Result {
+pub fn toggle(in_: &In0, index: i32) -> realm::Result {
+    toggle_todo(in_, index)?;
     redirect(in_)
 }
 

@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-realm = { path = "../amitu_heroku/realm/", features=["sqlite", "sqlite_default"] }
+realm = { version = "0.1.23", features=["sqlite", "sqlite_default"] }
 realm_macros = "0.1.1"
 observer = "0.2.2"
 observer_attribute = "0.1.7"

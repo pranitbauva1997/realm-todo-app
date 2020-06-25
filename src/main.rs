@@ -26,8 +26,6 @@ pub fn route(in_: &In0) -> realm::Result {
             input.required("title")?,
             input.required("done")?,
         ),
-        ("/empty_todos/", _) => realm_tutorial::routes::index::empty_todo(),
-        ("/api/clear-todo/", _) => realm_tutorial::routes::index::clear(in_),
         ("/api/toggle-todo/", _) => {
             realm_tutorial::routes::index::toggle(in_, input.required("index")?)
         }

@@ -183,13 +183,17 @@ itemView m idx i =
         , EB.color S.gray5
         , E.width E.fill
         , E.spacing 5
-        , RU.onClick (Click idx)
-        , RU.onDoubleClick (Click idx)
         , EE.onMouseEnter (Hover True idx)
         , EE.onMouseLeave (Hover False idx)
         , E.pointer
         ]
-        [ RU.text [ E.alignTop ] <| RU.yesno i.done Emoji.public Emoji.private
+        [ RU.text
+            [ E.alignTop
+            , RU.onClick (Click idx)
+            , RU.onDoubleClick (Click idx)
+            ]
+          <|
+            RU.yesno i.done Emoji.public Emoji.private
         , E.paragraph [] [ E.text i.title ]
         , RU.iff (m.hover == Just idx) <|
             E.el [ E.alignRight, RU.onClick (Delete idx), EF.size 12 ]

@@ -24,16 +24,6 @@ toggleToDo =
     ( "Index", "toggleToDo" )
 
 
-threeNotDone : ( String, String )
-threeNotDone =
-    ( "Index", "threeNotDone" )
-
-
-firstDone : ( String, String )
-firstDone =
-    ( "Index", "firstDone" )
-
-
 init : R.In -> R.TestFlags M.Config -> ( M.Model, Cmd (R.Msg M.Msg) )
 init in_ test =
     let
@@ -47,25 +37,7 @@ init in_ test =
         f l =
             ( m, R.result c (l ++ [ R.TestDone ]) )
     in
-    (if id == threeNotDone then
-        [ RU.match "three not done"
-            [ M.todo 1 "hello one" False
-            , M.todo 2 "hello two" False
-            , M.todo 3 "hello three" False
-            ]
-            test.config.list
-        ]
-
-     else if id == firstDone then
-        [ RU.match "first done"
-            [ M.todo 1 "hello one" True
-            , M.todo 2 "hello two" False
-            , M.todo 3 "hello three" False
-            ]
-            test.config.list
-        ]
-
-     else if id == emptyList then
+    (if id == emptyList then
         [ RU.match "no todos" [] test.config.list ]
 
      else if id == singleToDo then

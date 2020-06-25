@@ -1,6 +1,11 @@
 module Emoji exposing (..)
 
 
+plus : String
+plus =
+    "➕"
+
+
 heart : String
 heart =
     "❤️"

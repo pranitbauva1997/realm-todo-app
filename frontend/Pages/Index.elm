@@ -5,6 +5,7 @@ import Element as E
 import Element.Border as EB
 import Element.Events as EE
 import Element.Font as EF
+import Element.Input as EI
 import Emoji
 import Json.Decode as JD
 import Json.Encode as JE
@@ -16,6 +17,18 @@ import System as S
 type alias Config =
     { list : List Item
     }
+
+
+type alias Model =
+    { list : List Item
+    , hover : Maybe Int
+    }
+
+
+type Msg
+    = Click Int
+    | Delete Int
+    | Hover Bool Int
 
 
 todo : Int -> String -> Bool -> Item
@@ -44,7 +57,8 @@ type alias Item =
 itemE : Item -> JE.Value
 itemE i =
     JE.object
-        [ ( "title", JE.string i.title )
+        [ ( "index", JE.int i.index )
+        , ( "title", JE.string i.title )
         , ( "done", JE.bool i.done )
         ]
 
@@ -55,18 +69,6 @@ item =
         |> R.field "index" JD.int
         |> R.field "title" JD.string
         |> R.field "done" JD.bool
-
-
-type alias Model =
-    { list : List Item
-    , hover : Maybe Int
-    }
-
-
-type Msg
-    = Click Int
-    | Delete Int
-    | Hover Bool Int
 
 
 init : R.In -> Config -> ( Model, Cmd (R.Msg Msg) )
@@ -105,7 +107,27 @@ document in_ m =
 view : Model -> Int -> E.Element Msg
 view m width =
     E.column [ E.width E.fill, E.height E.fill ]
-        [ heading, RU.yesno (List.isEmpty m.list) empty (list m) width ]
+        [ heading
+        , RU.yesno (List.isEmpty m.list) empty (list m) width
+        , addTodoView width
+        ]
+
+
+addTodoView : Int -> E.Element Msg
+addTodoView width =
+    E.column
+        [ E.centerX
+        , E.width (E.px width)
+        , EB.widthEach { edges | top = 20 }
+        , EB.color S.white
+        ]
+        [ EI.button
+            [ E.centerX
+            ]
+            { onPress = Nothing
+            , label = E.text Emoji.plus
+            }
+        ]
 
 
 empty : Int -> E.Element Msg

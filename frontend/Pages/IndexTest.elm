@@ -19,6 +19,16 @@ singleToDo =
     ( "Index", "singleToDo" )
 
 
+deleteToDo : ( String, String )
+deleteToDo =
+    ( "Index", "deleteToDo" )
+
+
+twoToDos : ( String, String )
+twoToDos =
+    ( "Index", "twoToDos" )
+
+
 toggleToDo : ( String, String )
 toggleToDo =
     ( "Index", "toggleToDo" )
@@ -46,9 +56,25 @@ init in_ test =
             test.config.list
         ]
 
+     else if id == deleteToDo then
+        [ RU.match "single todo"
+            [ M.todo 1 "Hello" False ]
+            test.config.list
+        ]
+
+     else if id == twoToDos then
+        [ RU.match "two todos"
+            [ M.todo 1 "Hello" False
+            , M.todo 2 "World" False
+            ]
+            test.config.list
+        ]
+
      else if id == toggleToDo then
         [ RU.match "toggling todo"
-            [ M.todo 1 "Hello" True ]
+            [ M.todo 1 "Hello" False
+            , M.todo 2 "World" True
+            ]
             test.config.list
         ]
 

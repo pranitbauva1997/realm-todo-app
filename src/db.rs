@@ -61,3 +61,13 @@ pub fn toggle_todo(in_: &In0, index: i32) -> Result<()> {
         .map(|_| ())
         .map_err(Into::into)
 }
+
+pub fn delete_todo(in_: &In0, index: i32) -> Result<()> {
+    use crate::schema::hello_todo;
+    use diesel::prelude::*;
+
+    diesel::delete(hello_todo::dsl::hello_todo.filter(hello_todo::id.eq(index)))
+        .execute(in_.conn)
+        .map(|_| ())
+        .map_err(Into::into)
+}

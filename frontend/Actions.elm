@@ -19,3 +19,8 @@ addToDo title done =
         [ ( "title", JE.string title )
         , ( "done", JE.bool done )
         ]
+
+
+deleteToDo : Int -> ( String, JE.Value )
+deleteToDo i =
+    s2 "/api/delete-todo/" [ ( "index", JE.int i ) ]

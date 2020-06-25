@@ -29,6 +29,9 @@ pub fn route(in_: &In0) -> realm::Result {
         ("/api/toggle-todo/", _) => {
             realm_tutorial::routes::index::toggle(in_, input.required("index")?)
         }
+        ("/api/delete-todo/", _) => {
+            realm_tutorial::routes::index::delete(in_, input.required("index")?)
+        }
         _ => realm_tutorial::routes::index::todo(in_),
     }
 }

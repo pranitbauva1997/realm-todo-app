@@ -45,7 +45,9 @@ index : List RT.Step
 index =
     [ RT.Navigate Index.emptyList Routes.emptyToDo
     , RT.SubmitForm Index.singleToDo (Actions.addToDo "Hello" False)
-    , RT.SubmitForm Index.toggleToDo (Actions.toggleToDo 1)
+    , RT.SubmitForm Index.twoToDos (Actions.addToDo "World" False)
+    , RT.SubmitForm Index.toggleToDo (Actions.toggleToDo 2)
+    , RT.SubmitForm Index.deleteToDo (Actions.deleteToDo 2)
     ]
 
 

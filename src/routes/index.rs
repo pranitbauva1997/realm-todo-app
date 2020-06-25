@@ -1,4 +1,4 @@
-use crate::db::{add_todo_db, get_all_todos, toggle_todo};
+use crate::db::{add_todo_db, delete_todo, get_all_todos, toggle_todo};
 pub use realm::base::*;
 pub use realm::{Or404, Page as RealmPage};
 
@@ -34,4 +34,9 @@ pub fn toggle(in_: &In0, index: i32) -> realm::Result {
 
 pub fn redirect(in_: &In0) -> realm::Result {
     todo(in_).map(|r| r.with_url(crate::reverse::index()))
+}
+
+pub fn delete(in_: &In0, index: i32) -> realm::Result {
+    delete_todo(in_, index)?;
+    redirect(in_)
 }

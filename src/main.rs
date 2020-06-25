@@ -21,17 +21,13 @@ pub fn route(in_: &In0) -> realm::Result {
     match in_.ctx.pm() {
         t if realm::is_realm_url(t) => realm::handle(in_, t, &mut input),
         ("/", _) => realm_tutorial::routes::index::todo(in_),
-        ("/add-todo/", _) => realm_tutorial::routes::index::add_todo(
+        ("/add/", _) => realm_tutorial::routes::index::add(
             in_,
             input.required("title")?,
             input.required("done")?,
         ),
-        ("/api/toggle-todo/", _) => {
-            realm_tutorial::routes::index::toggle(in_, input.required("index")?)
-        }
-        ("/api/delete-todo/", _) => {
-            realm_tutorial::routes::index::delete(in_, input.required("index")?)
-        }
+        ("/toggle/", _) => realm_tutorial::routes::index::toggle(in_, input.required("index")?),
+        ("/delete/", _) => realm_tutorial::routes::index::delete(in_, input.required("index")?),
         _ => realm_tutorial::routes::index::todo(in_),
     }
 }

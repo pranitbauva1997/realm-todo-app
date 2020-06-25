@@ -1,6 +1,6 @@
 pub use realm::base::*;
 
-pub fn add_todo_db(in_: &In0, title: String, done: i32) -> Result<()> {
+pub fn add_db(in_: &In0, title: String, done: i32) -> Result<()> {
     use crate::schema::hello_todo;
     use diesel::prelude::*;
 
@@ -11,7 +11,7 @@ pub fn add_todo_db(in_: &In0, title: String, done: i32) -> Result<()> {
         .map_err(Into::into)
 }
 
-pub fn get_all_todos(in_: &In0) -> Result<Vec<crate::routes::index::Item>> {
+pub fn get_all_db(in_: &In0) -> Result<Vec<crate::routes::index::Item>> {
     use crate::schema::hello_todo;
     use diesel::prelude::*;
 
@@ -33,7 +33,7 @@ pub fn get_all_todos(in_: &In0) -> Result<Vec<crate::routes::index::Item>> {
     }
 }
 
-pub fn toggle_todo(in_: &In0, index: i32) -> Result<()> {
+pub fn toggle_db(in_: &In0, index: i32) -> Result<()> {
     use crate::schema::hello_todo;
     use diesel::prelude::*;
 
@@ -62,7 +62,7 @@ pub fn toggle_todo(in_: &In0, index: i32) -> Result<()> {
         .map_err(Into::into)
 }
 
-pub fn delete_todo(in_: &In0, index: i32) -> Result<()> {
+pub fn delete_db(in_: &In0, index: i32) -> Result<()> {
     use crate::schema::hello_todo;
     use diesel::prelude::*;
 

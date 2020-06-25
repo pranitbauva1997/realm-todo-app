@@ -10,12 +10,12 @@ s2 url params =
 
 toggleToDo : Int -> ( String, JE.Value )
 toggleToDo i =
-    s2 "/api/toggle-todo/" [ ( "index", JE.int i ) ]
+    s2 "/toggle/" [ ( "index", JE.int i ) ]
 
 
 addToDo : String -> Bool -> ( String, JE.Value )
 addToDo title done =
-    s2 "/add-todo/"
+    s2 "/add/"
         [ ( "title", JE.string title )
         , ( "done", JE.bool done )
         ]
@@ -23,4 +23,4 @@ addToDo title done =
 
 deleteToDo : Int -> ( String, JE.Value )
 deleteToDo i =
-    s2 "/api/delete-todo/" [ ( "index", JE.int i ) ]
+    s2 "/delete/" [ ( "index", JE.int i ) ]

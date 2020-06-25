@@ -1,4 +1,4 @@
-use crate::db::{add_todo_db, delete_todo, get_all_todos, toggle_todo};
+use crate::db::{add_db, delete_db, get_all_db, toggle_db};
 pub use realm::base::*;
 pub use realm::{Or404, Page as RealmPage};
 
@@ -14,21 +14,21 @@ struct Page {
     list: Vec<Item>,
 }
 
-pub fn add_todo(in_: &In0, title: String, done: bool) -> realm::Result {
-    add_todo_db(in_, title, done as i32)?;
+pub fn add(in_: &In0, title: String, done: bool) -> realm::Result {
+    add_db(in_, title, done as i32)?;
     redirect(in_)
 }
 
 pub fn todo(in_: &In0) -> realm::Result {
     // TODO: read the json file, deserialize it into vec of Item
     Page {
-        list: get_all_todos(in_)?,
+        list: get_all_db(in_)?,
     }
     .with_title("ToDo List")
 }
 
 pub fn toggle(in_: &In0, index: i32) -> realm::Result {
-    toggle_todo(in_, index)?;
+    toggle_db(in_, index)?;
     redirect(in_)
 }
 
@@ -37,6 +37,6 @@ pub fn redirect(in_: &In0) -> realm::Result {
 }
 
 pub fn delete(in_: &In0, index: i32) -> realm::Result {
-    delete_todo(in_, index)?;
+    delete_db(in_, index)?;
     redirect(in_)
 }

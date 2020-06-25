@@ -24,6 +24,7 @@ tests =
         t =
             [ f "index" index
             , f "resetDB" resetDB
+            , f "manual" manual
             ]
     in
     t
@@ -54,3 +55,11 @@ index =
 resetDB : List RT.Step
 resetDB =
     [ RT.Navigate Index.emptyList Routes.emptyToDo ]
+
+
+manual : List RT.Step
+manual =
+    [ RT.Navigate Index.emptyList Routes.emptyToDo
+    , RT.SubmitForm Index.singleToDo (Actions.addToDo "Hello" False)
+    , RT.SubmitForm Index.twoToDos (Actions.addToDo "World" False)
+    ]

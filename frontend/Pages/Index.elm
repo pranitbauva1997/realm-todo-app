@@ -1,6 +1,8 @@
 module Pages.Index exposing (..)
 
+import Actions
 import Browser as B
+import Dict exposing (Dict)
 import Element as E
 import Element.Border as EB
 import Element.Events as EE
@@ -29,11 +31,12 @@ type Msg
     = Click Int
     | Delete Int
     | Hover Bool Int
+    | OnError (Dict String String)
 
 
 todo : Int -> String -> Bool -> Item
-todo index title done =
-    { index = index, title = title, done = done }
+todo id title done =
+    { id = id, title = title, done = done }
 
 
 config : JD.Decoder Config
@@ -48,7 +51,7 @@ configE c =
 
 
 type alias Item =
-    { index : Int
+    { id : Int
     , title : String
     , done : Bool
     }
@@ -57,7 +60,7 @@ type alias Item =
 itemE : Item -> JE.Value
 itemE i =
     JE.object
-        [ ( "index", JE.int i.index )
+        [ ( "index", JE.int i.id )
         , ( "title", JE.string i.title )
         , ( "done", JE.bool i.done )
         ]
@@ -87,7 +90,7 @@ update _ msg m =
             ( { m | list = modified }, Cmd.none )
 
         Delete idx ->
-            ( { m | list = RU.deleteIth idx m.list }, Cmd.none )
+            ( { m | list = RU.deleteIth idx m.list }, Actions.deleteToDo idx |> R.submit OnError )
 
         Hover open idx ->
             if open then
@@ -95,6 +98,9 @@ update _ msg m =
 
             else
                 ( { m | hover = Nothing }, Cmd.none )
+
+        OnError _ ->
+            ( m, Cmd.none )
 
 
 document : R.In -> Model -> B.Document (R.Msg Msg)
@@ -175,28 +181,28 @@ footer lst =
     title
 
 
-itemView : Model -> Int -> Item -> E.Element Msg
-itemView m idx i =
+itemView : Model -> Item -> E.Element Msg
+itemView m i =
     E.row
         [ E.padding 10
         , EB.widthEach { edges | bottom = 1 }
         , EB.color S.gray5
         , E.width E.fill
         , E.spacing 5
-        , EE.onMouseEnter (Hover True idx)
-        , EE.onMouseLeave (Hover False idx)
+        , EE.onMouseEnter (Hover True i.id)
+        , EE.onMouseLeave (Hover False i.id)
         , E.pointer
         ]
         [ RU.text
             [ E.alignTop
-            , RU.onClick (Click idx)
-            , RU.onDoubleClick (Click idx)
+            , RU.onClick (Click i.id)
+            , RU.onDoubleClick (Click i.id)
             ]
           <|
             RU.yesno i.done Emoji.public Emoji.private
         , E.paragraph [] [ E.text i.title ]
-        , RU.iff (m.hover == Just idx) <|
-            E.el [ E.alignRight, RU.onClick (Delete idx), EF.size 12 ]
+        , RU.iff (m.hover == Just i.id) <|
+            E.el [ E.alignRight, RU.onClick (Delete i.id), EF.size 12 ]
                 (E.text Emoji.cross)
         ]
 
@@ -228,7 +234,7 @@ list m width =
             , E.width E.fill
             , EB.color S.gray5
             ]
-            (List.indexedMap (itemView m) m.list)
+            (List.map (itemView m) m.list)
         , footer m.list
         ]
 

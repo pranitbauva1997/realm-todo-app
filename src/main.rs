@@ -26,8 +26,8 @@ pub fn route(in_: &In0) -> realm::Result {
             input.required("title")?,
             input.required("done")?,
         ),
-        ("/toggle/", _) => realm_tutorial::routes::index::toggle(in_, input.required("index")?),
-        ("/delete/", _) => realm_tutorial::routes::index::delete(in_, input.required("index")?),
+        ("/toggle/", _) => realm_tutorial::routes::index::toggle(in_, input.required("id")?),
+        ("/delete/", _) => realm_tutorial::routes::index::delete(in_, input.required("id")?),
         _ => realm_tutorial::routes::index::todo(in_),
     }
 }

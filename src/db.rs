@@ -33,13 +33,13 @@ pub fn get_all_db(in_: &In0) -> Result<Vec<crate::routes::index::Item>> {
     }
 }
 
-pub fn toggle_db(in_: &In0, index: i32) -> Result<()> {
+pub fn toggle_db(in_: &In0, id: i32) -> Result<()> {
     use crate::schema::hello_todo;
     use diesel::prelude::*;
 
     let rows: Result<Vec<(i32, String, i32)>> = hello_todo::table
         .select((hello_todo::id, hello_todo::title, hello_todo::done))
-        .filter(hello_todo::id.eq(index))
+        .filter(hello_todo::id.eq(id))
         .load(in_.conn)
         .map_err(Into::into);
 
@@ -62,11 +62,11 @@ pub fn toggle_db(in_: &In0, index: i32) -> Result<()> {
         .map_err(Into::into)
 }
 
-pub fn delete_db(in_: &In0, index: i32) -> Result<()> {
+pub fn delete_db(in_: &In0, id: i32) -> Result<()> {
     use crate::schema::hello_todo;
     use diesel::prelude::*;
 
-    diesel::delete(hello_todo::dsl::hello_todo.filter(hello_todo::id.eq(index)))
+    diesel::delete(hello_todo::dsl::hello_todo.filter(hello_todo::id.eq(id)))
         .execute(in_.conn)
         .map(|_| ())
         .map_err(Into::into)
